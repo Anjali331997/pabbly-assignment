@@ -15,5 +15,6 @@ userSchema.pre('save',async function(next){
     }
     next();
 },{timestamps:true})
+
 const UserModel = mongoose.model('User',userSchema);
 module.exports= UserModel;
