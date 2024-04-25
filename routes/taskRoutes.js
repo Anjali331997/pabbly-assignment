@@ -4,7 +4,7 @@ const auth = require('../middleware/authenticationMiddleware')
 const Task = require('../modals/Task')
 
 router.get('/test', (req, res) => {
-    res.send("task routes are working")
+    res.send({messgae:"task routes are working"})
 })
 
 //curd task for authenticated users
