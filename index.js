@@ -17,7 +17,7 @@ app.use('/tasks',taskRouter)
 
 //routes
 app.get('/',(req,res)=>{
-    res.json({message:"Simple task manager, Home route"})
+    res.json({message:"Simple task manager for papply, Home route"})
 })
 
 app.listen(PORT,()=>{
