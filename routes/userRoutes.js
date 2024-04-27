@@ -5,12 +5,11 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 
 router.get('/', (req, res) => {
-    res.send("USer routes are working")
+    res.send("papply routes are working")
 })
 
 //sign-up
 router.post('/register', async (req, res) => {
-
     try {
         const { name, email, password } = req.body;
         const new_user = new User({ name, email, password });
