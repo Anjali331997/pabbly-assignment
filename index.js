@@ -10,20 +10,25 @@ const userRouter = require('./routes/userRoutes')
 const PORT = process.env.PORT || 8000;
 
 const app = express();
-app.use(cros())
+app.use(cros({
+    "origin": "*",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204
+}))
 
 
 app.use(bodyParser.json())
 app.use(express.json())
-app.use('/users',userRouter)
-app.use('/tasks',taskRouter)
+app.use('/users', userRouter)
+app.use('/tasks', taskRouter)
 
 //routes
-app.get('/',(req,res)=>{
-    res.json({message:"Simple task manager for papply, Home route"})
+app.get('/', (req, res) => {
+    res.json({ message: "Simple task manager for papply, Home route" })
 })
 
-app.listen(PORT,()=>{
+app.listen(PORT, () => {
     console.log(`Listening to port:${PORT}`)
 })
 
