@@ -7,11 +7,11 @@ const taskSchema = new mongoose.Schema({
     priority: { type: String, enum: ['low', 'medium', 'high'], required: true },
     date: { type: Date, required: true },
     email: {type:Array},
-    owner: {
+    owner: [{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
-    }
+    }]
 }, { timestamps: true })
 
 const Task = mongoose.model('task', taskSchema);

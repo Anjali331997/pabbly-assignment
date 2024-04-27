@@ -4,7 +4,7 @@ const auth = require('../middleware/authenticationMiddleware')
 const Task = require('../modals/Task')
 
 router.get('/test', (req, res) => {
-    res.send({messgae:"task routes are working"})
+    res.send({ messgae: "task routes are working" })
 })
 
 //curd task for authenticated users
@@ -13,11 +13,19 @@ router.get('/test', (req, res) => {
 router.post('/', auth, async (req, res) => {
 
     try {
+        let assignedTo = req.body.emails;
+        let owners = []
+        if (assignedTo.length > 0) {
+            owners = assignedTo.map(async (ele, index) => {
+                const user = await User.findOne({ email: email })
+                return user._id
+            })
+        }
         //description,complted from req.body
         //try to get owner:req.user._id
         const task = new Task({
             ...req.body,
-            owner: req.user._id
+            owner: [...owners, req.user._id]
         })
         await task.save();
         res.status(200).json({
@@ -34,7 +42,7 @@ router.post('/', auth, async (req, res) => {
 //get the tasks
 router.get('/', auth, async (req, res) => {
     try {
-        const tasks = await Task.find({ owner: req.user._id })
+        const tasks = await Task.find({ owner: { $in: [req.user._id] } })
         res.status(200).send({ tasks })
     } catch (error) {
         res.status(404).send({ error: error.meassage })
@@ -47,7 +55,7 @@ router.get('/:id', auth, async (req, res) => {
     const taskid = req.params.id
     try {
 
-        const task = await Task.findOne({ _id: taskid, owner: req.user._id })
+        const task = await Task.findOne({ _id: taskid, owner: { $in: [req.user._id] } })
         if (!task) {
             res.status(404).json({ message: "Task not found" })
         }
@@ -80,7 +88,7 @@ router.patch('/:id', auth, async (req, res) => {
         res.status(404).send({ Error: "Invalid updates" })
     }
     try {
-        const task = await Task.findOneAndUpdate({ _id:taskid }, req.body,{new:true})
+        const task = await Task.findOneAndUpdate({ _id: taskid }, req.body, { new: true })
         console.log(task)
         if (!task) {
             res.status(404).json({ Error: "Task not found" })
@@ -95,10 +103,10 @@ router.patch('/:id', auth, async (req, res) => {
 })
 
 //delete a task 
-router.delete('/:id',auth, async (req,res)=>{
+router.delete('/:id', auth, async (req, res) => {
     const taskid = req.params.id;
     try {
-        const task = await Task.findOneAndDelete({ _id:taskid ,owner:req.user._id})
+        const task = await Task.findOneAndDelete({ _id: taskid, owner: { $in: [req.user._id] } })
         console.log(task)
         if (!task) {
             res.status(404).json({ Error: "Task not found" })
