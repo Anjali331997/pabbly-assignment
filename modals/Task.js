@@ -6,6 +6,7 @@ const taskSchema = new mongoose.Schema({
     status: { type: Boolean, enum: ['pending', 'completed'], default: 'pending' },
     priority: { type: String, enum: ['low', 'medium', 'high'], required: true },
     date: { type: Date, required: true },
+    email: {type:Array},
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
