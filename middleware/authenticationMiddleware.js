@@ -16,7 +16,8 @@ const authMiddleware = async (req, res, next) => {
         next();
     }
     catch (err) {
-        res.status(401).send({ error: err.message })
+        res.status(401).send({ error: err.message,
+        jwt:token})
     }
 }
 
