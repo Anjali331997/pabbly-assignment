@@ -10,7 +10,7 @@ const userRouter = require('./routes/userRoutes')
 const PORT = process.env.PORT || 8000;
 
 const app = express();
-app.use(cros({
+app.use(cors({
     "origin": "*",
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
