@@ -3,10 +3,9 @@ const mongoose = require('mongoose');
 const taskSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
-    status: { type: Boolean, enum: ['pending', 'completed'], default: 'pending' },
+    status: { type: Boolean, enum: ['pending', 'completed'], default: false },
     priority: { type: String, enum: ['low', 'medium', 'high'], default:'low' },
     date: { type: Date, required: true },
-    email: {type:Array},
     owner: [{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
