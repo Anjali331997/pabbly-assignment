@@ -13,7 +13,7 @@ router.get('/test', (req, res) => {
 router.post('/', auth, async (req, res) => {
 
     try {
-        let assignedTo = req.body.emails;
+        let assignedTo = req.body.emails || [];
         let owners = []
         if (assignedTo.length > 0) {
             owners = assignedTo.map(async (ele, index) => {
@@ -34,8 +34,8 @@ router.post('/', auth, async (req, res) => {
         })
     }
     catch (error) {
-        res.status(400).send({ error: error.message })
-        console.log(error.message)
+        res.status(400).send({ error: error })
+        console.log(error)
     }
 })
 
