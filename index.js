@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 8000;
 
 const app = express();
 app.use(cors({
-    "origin": "*",
+    "origin": "http://localhost:3000",
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
     "optionsSuccessStatus": 204
